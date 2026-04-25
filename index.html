@@ -26,12 +26,9 @@
           <h1>Phong trung bay 360 cho mot cau chuyen chua co noi dung co dinh</h1>
           <p class="lede">
             Xoay nhin khap phong, bam vao tung vat pham de mo ra cac manh ky uc gia dinh.
-            To bao o giua phong se dua qua mot trang doc tuong tac mo phong so bao giay cuoi cung.
+            To bao o cuoi phong se dua qua mot trang doc tuong tac mo phong so bao giay cuoi cung.
           </p>
           <div class="hud__actions">
-            <button type="button" class="button button--primary" data-action="focus-newspaper">
-              Huong ve to bao
-            </button>
             <button type="button" class="button" data-action="toggle-help">
               Cach tuong tac
             </button>
@@ -40,8 +37,22 @@
 
         <div class="hud__status glass">
           <span class="status-dot"></span>
-          <span>Desktop: keo chuot de nhin quanh, bam vao vat pham de mo noi dung.</span>
+          <span>Desktop: re chuot de nhin quanh, bam vao be mat trong phong de di den gan diem do.</span>
         </div>
+      </section>
+
+      <section class="top-bar glass" aria-label="Hanh trinh phong trung bay">
+        <label class="top-bar__field" for="journeySelect">
+          <span class="eyebrow">Hanh trinh</span>
+          <select id="journeySelect" class="top-bar__select">
+            <option value="">Chon mot diem dung</option>
+            <option value="timeline">Mo dau</option>
+            <option value="voice">Giong noi</option>
+            <option value="typewriter">Ban thao</option>
+            <option value="archive">Luu tru</option>
+            <option value="newspaper">To bao cuoi cung</option>
+          </select>
+        </label>
       </section>
 
       <section class="help-panel glass" id="helpPanel" hidden>
@@ -56,8 +67,10 @@
         </div>
         <ul class="help-list">
           <li>Keo chuot hoac vuot man hinh de xoay nhin 360 do.</li>
-          <li>Bam vao vong sang tren tung vat pham de doc noi dung gia dinh.</li>
-          <li>Bam vao to bao de chuyen sang giao dien bao tuong tac.</li>
+          <li>Bam vao bat ky be mat nao trong phong, ke ca san va tuong, de di den gan diem do.</li>
+          <li>Bam vao buc trung bay de di lai gan. Bam truc tiep vao vat pham moi mo bang thong tin.</li>
+          <li>Su dung dropdown Hanh trinh o phia tren de nhay nhanh toi tung diem dung.</li>
+          <li>Bam vao to bao o cuoi phong de chuyen sang giao dien bao tuong tac.</li>
           <li>Bam "Tro lai phong" de quay lai khong gian VR bat cu luc nao.</li>
         </ul>
       </section>
@@ -83,99 +96,25 @@
             <h2>So bao cuoi cung</h2>
           </div>
           <div class="newspaper__actions">
-            <button type="button" class="button button--light" data-action="open-frontpage">
-              Trang nhat
-            </button>
-            <button type="button" class="button button--light" data-action="open-feature">
-              Phong su
+            <a class="button button--light" href="./to-bao-cuoi-cung.html" target="_blank" rel="noreferrer">
+              Mo rieng 1 tab
+            </a>
+            <button type="button" class="button button--light" data-action="reload-newspaper">
+              Tai lai to bao
             </button>
             <button type="button" class="button button--light" data-action="close-newspaper">
               Tro lai phong
             </button>
           </div>
         </div>
-
-        <div class="newspaper__pages" data-mode="frontpage">
-          <article class="sheet sheet--front">
-            <header class="masthead">
-              <p class="masthead__date">Saigon, thang 05 nam 2020</p>
-              <h3>Nhip Song Cuoi Tuan</h3>
-              <p class="masthead__tagline">Ban in cuoi cung truoc khi toa soan dung bao giay</p>
-            </header>
-
-            <section class="front-layout">
-              <div class="headline-block">
-                <p class="kicker">Ban dac biet</p>
-                <h4>Tieng may in dung lai, ky uc bat dau noi lon hon</h4>
-                <p>
-                  So bao nay duoc trung bay nhu mot vat chuyen canh: tu giay muc sang khong gian
-                  so, tu doc don tuyen sang trinh dien, tu tin tuc sang hoi uc.
-                </p>
-                <button type="button" class="text-link" data-action="open-feature">
-                  Mo bai phong su chinh
-                </button>
-              </div>
-
-              <div class="front-photo" aria-hidden="true">
-                <div class="press-room">
-                  <span class="press-room__beam"></span>
-                  <span class="press-room__beam"></span>
-                  <span class="press-room__beam"></span>
-                </div>
-              </div>
-
-              <div class="column-snippets">
-                <button type="button" class="snippet" data-feature="editor-note">
-                  <span class="snippet__label">Thu toa soan</span>
-                  <strong>Mot loi chao tam biet khong hoan toan buon ba</strong>
-                </button>
-                <button type="button" class="snippet" data-feature="timeline">
-                  <span class="snippet__label">Du lieu</span>
-                  <strong>4 cot moc tu ngay phong vien roi toa soan den ngay may in tat</strong>
-                </button>
-                <button type="button" class="snippet" data-feature="archive">
-                  <span class="snippet__label">Luu tru</span>
-                  <strong>Nhung gi se duoc giu lai khi bao giay khong con duoc in</strong>
-                </button>
-              </div>
-            </section>
-          </article>
-
-          <article class="sheet sheet--feature">
-            <div class="feature-grid">
-              <section class="feature-main">
-                <p class="kicker" id="featureKicker">Phong su</p>
-                <h4 id="featureTitle">Mot phong tin vang tieng may rot xoat</h4>
-                <p class="feature-deck" id="featureDeck">
-                  Ban mo rong noi dung nay bang van ban that cua ban sau, hien tai duoc dien bang
-                  mot nhom chi tiet gia dinh de giu dung tinh chat trien lam ke chuyen.
-                </p>
-                <div class="feature-copy" id="featureCopy"></div>
-              </section>
-
-              <aside class="feature-side">
-                <div class="archive-card">
-                  <p class="archive-card__label">Chi tiet tuong tac</p>
-                  <h5>Ban co the doi goc ke chuyen</h5>
-                  <p>
-                    Moi nut o cot ben nay la mot lop noi dung. Khi co chat lieu that, ban chi can
-                    thay du lieu trong `script.js`.
-                  </p>
-                </div>
-                <div class="sidebar-list">
-                  <button type="button" class="sidebar-item" data-feature="editor-note">
-                    Thu toa soan
-                  </button>
-                  <button type="button" class="sidebar-item" data-feature="timeline">
-                    Cot moc chuyen doi
-                  </button>
-                  <button type="button" class="sidebar-item" data-feature="archive">
-                    Vat con sot lai
-                  </button>
-                </div>
-              </aside>
-            </div>
-          </article>
+        <div class="newspaper__pages">
+          <iframe
+            id="newspaperFrame"
+            class="newspaper__frame"
+            src="./to-bao-cuoi-cung.html"
+            title="To bao cuoi cung"
+            loading="lazy"
+          ></iframe>
         </div>
       </section>
 
@@ -200,6 +139,8 @@
 
           <a-sky color="#0f1117"></a-sky>
           <a-plane
+            class="teleportable"
+            data-surface="floor"
             position="0 0 0"
             rotation="-90 0 0"
             width="14"
@@ -207,18 +148,27 @@
             color="#38281f"
             material="roughness: 1; metalness: 0.05"
           ></a-plane>
+          <a-plane
+            class="teleportable"
+            data-surface="floor"
+            position="0 0.04 0"
+            rotation="-90 0 0"
+            width="13.2"
+            height="13.2"
+            material="color: #ffffff; transparent: true; opacity: 0.0"
+          ></a-plane>
 
-          <a-box position="0 2.5 -7" width="14" height="5" depth="0.3" color="#2b2624"></a-box>
-          <a-box position="7 2.5 0" width="0.3" height="5" depth="14" color="#211c1b"></a-box>
-          <a-box position="-7 2.5 0" width="0.3" height="5" depth="14" color="#211c1b"></a-box>
+          <a-box class="teleportable" data-surface="wall" position="0 2.5 -7" width="14" height="5" depth="0.3" color="#2b2624"></a-box>
+          <a-box class="teleportable" data-surface="wall" position="7 2.5 0" width="0.3" height="5" depth="14" color="#211c1b"></a-box>
+          <a-box class="teleportable" data-surface="wall" position="-7 2.5 0" width="0.3" height="5" depth="14" color="#211c1b"></a-box>
           <a-box position="0 5 0" width="14" height="0.2" depth="14" color="#171717"></a-box>
 
-          <a-cylinder position="0 0.55 -2.1" radius="0.75" height="1.1" color="#5f4735"></a-cylinder>
+          <a-cylinder class="teleportable" data-surface="pedestal" position="0 0.55 -5.45" radius="0.75" height="1.1" color="#5f4735"></a-cylinder>
           <a-box
             id="newspaperArtifact"
             class="clickable"
             data-artifact="newspaper"
-            position="0 1.32 -2.1"
+            position="0 1.32 -5.45"
             rotation="-12 0 0"
             width="1.1"
             height="0.04"
@@ -226,84 +176,30 @@
             material="src: #paperTexture; roughness: 1"
             shadow="cast: true"
           ></a-box>
-          <a-ring
-            class="clickable"
-            data-artifact="newspaper"
-            position="0 1.52 -2.1"
-            rotation="90 0 0"
-            radius-inner="0.26"
-            radius-outer="0.34"
-            color="#f6d79a"
-            material="opacity: 0.95"
-            animation="property: scale; dir: alternate; dur: 1300; easing: easeInOutSine; loop: true; to: 1.12 1.12 1.12"
-          ></a-ring>
 
-          <a-box position="-3.4 0.58 -3.4" width="0.95" height="1.16" depth="0.95" color="#51453f"></a-box>
-          <a-cylinder position="-3.4 1.18 -3.4" radius="0.31" height="0.52" color="#cfc6b8"></a-cylinder>
-          <a-box position="-3.4 1.52 -3.18" width="0.56" height="0.06" depth="0.18" color="#111111"></a-box>
-          <a-ring
-            class="clickable"
-            data-artifact="voice"
-            position="-3.4 2.02 -3.18"
-            rotation="0 45 0"
-            radius-inner="0.16"
-            radius-outer="0.22"
-            color="#8bc6ff"
-            animation="property: rotation; dur: 6000; easing: linear; loop: true; to: 0 405 0"
-          ></a-ring>
+          <a-box class="teleportable" data-surface="pedestal" position="-3.4 0.58 -3.4" width="0.95" height="1.16" depth="0.95" color="#51453f"></a-box>
+          <a-cylinder class="clickable" data-artifact="voice" position="-3.4 1.18 -3.4" radius="0.31" height="0.52" color="#cfc6b8"></a-cylinder>
+          <a-box class="clickable" data-artifact="voice" position="-3.4 1.52 -3.18" width="0.56" height="0.06" depth="0.18" color="#111111"></a-box>
 
-          <a-box position="3.2 0.58 -3.3" width="0.96" height="1.16" depth="0.96" color="#4a4038"></a-box>
-          <a-box position="3.2 1.5 -3.3" width="0.74" height="0.58" depth="0.42" color="#262321"></a-box>
-          <a-box position="3.2 1.86 -3.1" width="0.34" height="0.12" depth="0.08" color="#8b6f4f"></a-box>
-          <a-ring
-            class="clickable"
-            data-artifact="typewriter"
-            position="3.2 2.08 -3.1"
-            rotation="0 -35 0"
-            radius-inner="0.16"
-            radius-outer="0.22"
-            color="#ffa6a6"
-            animation="property: rotation; dur: 5800; easing: linear; loop: true; to: 0 325 0"
-          ></a-ring>
+          <a-box class="teleportable" data-surface="pedestal" position="3.2 0.58 -3.3" width="0.96" height="1.16" depth="0.96" color="#4a4038"></a-box>
+          <a-box class="clickable" data-artifact="typewriter" position="3.2 1.5 -3.3" width="0.74" height="0.58" depth="0.42" color="#262321"></a-box>
+          <a-box class="clickable" data-artifact="typewriter" position="3.2 1.86 -3.1" width="0.34" height="0.12" depth="0.08" color="#8b6f4f"></a-box>
 
-          <a-box position="-4.6 1.8 2.7" width="1.36" height="1.82" depth="0.16" color="#63584e"></a-box>
-          <a-plane position="-4.58 1.8 2.8" width="1.12" height="1.52" color="#ece3d1"></a-plane>
-          <a-ring
-            class="clickable"
-            data-artifact="timeline"
-            position="-4.58 0.76 2.78"
-            rotation="0 38 0"
-            radius-inner="0.15"
-            radius-outer="0.22"
-            color="#a9f0d1"
-            animation="property: scale; dir: alternate; dur: 1150; easing: easeInOutSine; loop: true; to: 1.16 1.16 1.16"
-          ></a-ring>
+          <a-box class="clickable" data-artifact="timeline" position="-4.6 1.8 2.7" width="1.36" height="1.82" depth="0.16" color="#63584e"></a-box>
+          <a-plane class="clickable" data-artifact="timeline" position="-4.58 1.8 2.8" width="1.12" height="1.52" color="#ece3d1"></a-plane>
 
-          <a-box position="4.5 0.55 2.5" width="1.06" height="1.1" depth="1.06" color="#443931"></a-box>
-          <a-box position="4.5 1.36 2.5" width="0.9" height="0.26" depth="0.56" color="#80584a"></a-box>
-          <a-cylinder position="4.12 1.72 2.52" radius="0.11" height="0.48" color="#d6b486"></a-cylinder>
-          <a-cylinder position="4.5 1.72 2.52" radius="0.11" height="0.48" color="#d6b486"></a-cylinder>
-          <a-cylinder position="4.88 1.72 2.52" radius="0.11" height="0.48" color="#d6b486"></a-cylinder>
-          <a-ring
-            class="clickable"
-            data-artifact="archive"
-            position="4.5 2.08 2.5"
-            rotation="0 -42 0"
-            radius-inner="0.16"
-            radius-outer="0.22"
-            color="#ffe38b"
-            animation="property: rotation; dur: 6200; easing: linear; loop: true; to: 0 330 0"
-          ></a-ring>
+          <a-box class="teleportable" data-surface="pedestal" position="4.5 0.55 2.5" width="1.06" height="1.1" depth="1.06" color="#443931"></a-box>
+          <a-box class="clickable" data-artifact="archive" position="4.5 1.36 2.5" width="0.9" height="0.26" depth="0.56" color="#80584a"></a-box>
+          <a-cylinder class="clickable" data-artifact="archive" position="4.12 1.72 2.52" radius="0.11" height="0.48" color="#d6b486"></a-cylinder>
+          <a-cylinder class="clickable" data-artifact="archive" position="4.5 1.72 2.52" radius="0.11" height="0.48" color="#d6b486"></a-cylinder>
+          <a-cylinder class="clickable" data-artifact="archive" position="4.88 1.72 2.52" radius="0.11" height="0.48" color="#d6b486"></a-cylinder>
 
           <a-entity id="cameraRig" position="0 1.6 2.8">
             <a-camera id="mainCamera" look-controls wasd-controls="enabled: false">
               <a-entity
-                id="cursor"
+                id="mouseCursor"
                 cursor="rayOrigin: mouse"
-                raycaster="objects: .clickable"
-                position="0 0 -1"
-                geometry="primitive: ring; radiusInner: 0.012; radiusOuter: 0.02"
-                material="color: #f8efe4; shader: flat"
+                raycaster="objects: .clickable, .teleportable"
               ></a-entity>
             </a-camera>
           </a-entity>

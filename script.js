@@ -2,31 +2,28 @@ const artifactContent = {
   voice: {
     tag: "Am thanh",
     title: "May nghe ghi am",
-    subtitle: "Mot diem neo cho loi ke, phong van, va cac doan doc chen trong trien lam.",
+    subtitle: "Tram nghe cho nhung doan phong van, loi dan, va lop ke chuyen bang giong noi.",
     body: [
-      "Ban co the bien vat pham nay thanh mot tram nghe audio: moi lan bam se mo ra mot doan ghi am, loi dan, hoac nhat ky am thanh tuan tu.",
-      "Trong ban demo nay, no dong vai tro nhac rang rang rang rang giua phong: mot vat nho nhung goi y rang cau chuyen co the den bang giong noi thay vi chi van ban.",
-      "Khi da co noi dung that, ban co the thay phan body nay bang transcript, duong dan mp3, hoac nut mo modal audio rieng."
+      "Vat pham nay hop de mo ra transcript, audio clip, hoac mot lop hoi am ngan giua nhung doan trung bay co nhieu van ban.",
+      "Trong demo, no dong vai tro diem dung cho mot manh ky uc duoc ke bang giong noi thay vi bang hinh anh hay bo chu dai."
     ]
   },
   typewriter: {
     tag: "Van ban",
     title: "May danh chu cua bien tap vien",
-    subtitle: "Noi trung bay nhung dong mo dau, tieu de nhap nhoang, va net lao dong cua toa soan.",
+    subtitle: "Noi ke ve ban thao, tieu de, va qua trinh dua mot y thanh mot ban tin.",
     body: [
-      "Hotspot nay hop voi cac doan mo ta boi canh: vi du mot ghi chu ve cach mot ban tin duoc hinh thanh, ai viet nhap dau tien, ai sua lan cuoi.",
-      "Ve mat giao dien, no la diem dung de ke nhung phan can nhieu chu hon, bo sung bang hinh scan ban thao, trich doan, hay timeline bien tap.",
-      "Neu ban muon day hon, vat pham nay co the mo sang mot cua so side-by-side giua ban nhap tho va phien ban dang bao."
+      "Day la diem hop ly cho nhung doan mo ta boi canh: ai viet, ai sua, ban nhap dau tien trong ra sao, va nhung chi tiet lao dong thuong bi bo qua.",
+      "Neu can mo rong sau nay, vat pham nay co the dan den mot trang rieng gom ban thao scan va phien ban da len khuon."
     ]
   },
   timeline: {
     tag: "Cot moc",
     title: "Khung lich tren tuong",
-    subtitle: "Mot mat phang hop ly de treo cac moc thoi gian, thay doi, va mat mat.",
+    subtitle: "Mat phang de treo cac moc thoi gian, chuyen doi, va nhung ngay danh dau.",
     body: [
-      "Vat pham nay dai dien cho timeline tong quan: luc su kien bat dau, luc khong gian doi dang, va luc mot trang thai song ket thuc.",
-      "Thay vi viet toan bo noi dung vao phong, ban de nguoi xem cham vao tung moc roi doc theo lop. Cach nay giu phong thoang, nhung van co do sau.",
-      "Trong phien ban that, ban co the doi no thanh chuoi nam-thang-ngay, them anh nho, hoac dan sang tai lieu scan."
+      "Nguoi xem co the bat dau hanh trinh tai day de nam boi canh tong quan truoc khi di sau vao cac vat pham co tinh ca nhan hon.",
+      "Trong ban that, ban chi can thay noi dung nay bang timeline va hinh scan tai lieu neu can."
     ]
   },
   archive: {
@@ -34,56 +31,36 @@ const artifactContent = {
     title: "Hop luu tru va ba cuon film",
     subtitle: "Noi giu nhung thu con sot lai sau khi mot dinh dang mat di.",
     body: [
-      "Day la hotspot hop voi nhung mon do mang tinh vat chat: the nha bao, phong bi anh, danh sach truc, bang ten, hoac nhung thu khong con xuat hien trong doi song so.",
-      "Trong trien lam dang ke ve mot to bao ngung in, hop luu tru co the giup nguoi xem cam ro y nghia cua chuyen doi dinh dang: mat di khong chi la mot kenh phat hanh, ma la ca thao tac, chat lieu, mui, va nhip lam viec.",
-      "Neu ban muon them motion, hotspot nay co the mo gallery dang carousel gom 5-7 mon do, moi mon do la mot manh chu ky uc rieng."
+      "Hop luu tru hop voi cac vat chung vat chat: the nha bao, phong bi anh, ghi chu truc, hay nhung mon do khong di cung len ban so.",
+      "No tao cam giac rang qua trinh chuyen doi khong chi mat mot kenh phat hanh, ma mat ca thao tac, mui, chat lieu, va nhip lao dong."
     ]
   },
   newspaper: {
     tag: "Trang bao",
     title: "So bao giay cuoi cung",
-    subtitle: "Bam vao de roi khoi vat the trung bay va buoc thang vao mot trang bao tuong tac.",
+    subtitle: "Vat pham o diem cuoi hanh trinh, bam vao de mo file bao HTML that cua ban.",
     body: [
-      "To bao la vat chuyen canh trung tam cua demo nay. No bat dau nhu mot mon hien vat tren be, nhung khi nguoi xem bam vao thi no mo rong thanh mot khong gian doc mo phong front page va bai phong su ben trong.",
-      "Cau truc nay hop voi y tuong cua ban: dung mot vat the trong VR room lam cong vao mot lop ke chuyen khac, thay vi giu moi thu trong cung mot kieu tuong tac.",
-      "Trong phien ban that, ban co the thay ten toa soan, ngay phat hanh, bai viet, hinh scan, va du lieu lich su bang chat lieu cua rieng ban."
+      "Khac voi ban mock truoc, hotspot nay mo truc tiep file `to-bao-cuoi-cung.html` duoc nhung vao overlay toan man hinh.",
+      "Nghia la khi ban sua file bao goc, phan trien lam nay tu dong lay dung phien ban moi nhat ma khong can viet lai giao dien."
     ]
   }
 };
 
-const newspaperFeatures = {
-  "editor-note": {
-    kicker: "Thu toa soan",
-    title: "Chung toi dong may in, nhung khong dong ky uc",
-    deck: "Mot doan thu ngan tu bien tap vien co the dat o day de mo ra tam the cua ngay so bao giay cuoi cung duoc phat hanh.",
-    copy: [
-      "Buoi sang hom do, toa soan van sang den dung gio. May pha ca phe van keu, dien thoai van rung, mail van do ve. Chi co mot thu khac di: moi nguoi deu biet cuoi ngay nay se co mot chuyen khong lap lai nua.",
-      "Neu dung bo cuc nay cho noi dung that, ban co the viet bang giong thu toa soan: khong can qua dai, nhung phai co nhiem luc cua mot noi vua ket thuc mot thoi quen lao dong rat cu the.",
-      "Phan nay hop de chen mot cau noi de nho, mot doan hoi tuong ngan, hoac mot xin loi nho gui den doc gia da theo bao giay suot nhieu nam."
-    ]
-  },
-  timeline: {
-    kicker: "Chuyen doi",
-    title: "Bon cot moc cua mot su im lang bat ngo",
-    deck: "Mot timeline nho de dua nguoi xem di qua qua trinh tu rut gon nhan su, giam ky phat hanh, den so bao cuoi.",
-    copy: [
-      "Cot moc dau tien co the la luc toa soan bat dau giam so trang. Chuyen doi luon den tu nhung dau hieu rat vat chat: it trang hon, it muc hon, it xe giao bao hon.",
-      "Cot moc thu hai la nhung cuoc hop ngan nhung nang. O do, quyet dinh kinh doanh va noi lo cua phong vien dung chung trong cung mot can phong.",
-      "Cot moc thu ba la luc doc gia nhan ra lich phat hanh thay doi. Su kien doi khi khong nam trong thong bao lon, ma nam o viec thoi quen buoi sang cua ho bat ngo trong di.",
-      "Cot moc cuoi la ngay may in tat. Phan nay rat hop de dua anh chup nha in, thong so, hoac mot con so cu the de cho thay su ket thuc co trong luong."
-    ]
-  },
-  archive: {
-    kicker: "Vat con sot lai",
-    title: "Nhung thu o lai sau khi bao giay dung chay",
-    deck: "Trang nay co the chua danh sach vat the, tai lieu scan, va nhung dau vet lao dong ma ban muon giu lai trong trien lam.",
-    copy: [
-      "Mot tam the nha bao da nga mau, mot tap ban in thu co vet but do, mot phong bi chua anh chua kip tra lai kho. Nhung vat the nay khong noi thay cho bai viet, nhung chung noi thay cho nhung ban tay da tao ra bai viet.",
-      "Neu muon giu tinh trung bay, ban co the dung bo cuc nay nhu mot ho so vat chung. Moi do vat duoc dat ten gon, them chu thich ngan, va neu can thi cho mo anh lon hon.",
-      "Khi dua len GitHub Pages, cach lam gon nhat la dat tat ca metadata trong mot object JavaScript. Luc can thay chat lieu that, ban chi sua du lieu ma khong phai dap giao dien."
-    ]
-  }
+const focusPoints = {
+  timeline: { x: -1.95, z: 1.7 },
+  archive: { x: 1.95, z: 1.45 },
+  voice: { x: -1.75, z: -1.35 },
+  typewriter: { x: 1.7, z: -1.4 },
+  newspaper: { x: 0, z: -2.95 }
 };
+
+const TELEPORT_OFFSETS = {
+  floor: 1.15,
+  wall: 2.4,
+  pedestal: 1.7
+};
+
+const MAX_TELEPORT_STEP = 2.25;
 
 const artifactPanel = document.getElementById("artifactPanel");
 const artifactTag = document.getElementById("artifactTag");
@@ -91,15 +68,16 @@ const artifactTitle = document.getElementById("artifactTitle");
 const artifactSubtitle = document.getElementById("artifactSubtitle");
 const artifactBody = document.getElementById("artifactBody");
 const helpPanel = document.getElementById("helpPanel");
+const journeySelect = document.getElementById("journeySelect");
 const newspaperView = document.getElementById("newspaperView");
-const newspaperPages = document.querySelector(".newspaper__pages");
-const featureKicker = document.getElementById("featureKicker");
-const featureTitle = document.getElementById("featureTitle");
-const featureDeck = document.getElementById("featureDeck");
-const featureCopy = document.getElementById("featureCopy");
+const newspaperFrame = document.getElementById("newspaperFrame");
 const sceneWrap = document.getElementById("sceneWrap");
 const cameraRig = document.getElementById("cameraRig");
 const mainCamera = document.getElementById("mainCamera");
+
+function isNewspaperOpen() {
+  return !newspaperView.classList.contains("overlay--hidden");
+}
 
 function renderArtifact(key) {
   const item = artifactContent[key];
@@ -116,9 +94,23 @@ function closeArtifact() {
   artifactPanel.classList.add("overlay--hidden");
 }
 
-function openNewspaper(mode = "frontpage") {
+function animateCameraTo(x, z) {
+  if (!cameraRig) return;
+
+  cameraRig.setAttribute(
+    "animation__move",
+    `property: position; to: ${x} 1.6 ${z}; dur: 430; easing: easeInOutQuad`
+  );
+}
+
+function focusArtifact(key) {
+  const point = focusPoints[key];
+  if (!point) return;
+  animateCameraTo(point.x, point.z);
+}
+
+function openNewspaper() {
   closeArtifact();
-  newspaperPages.dataset.mode = mode;
   newspaperView.classList.remove("overlay--hidden");
   sceneWrap.setAttribute("aria-hidden", "true");
 }
@@ -128,65 +120,96 @@ function closeNewspaper() {
   sceneWrap.removeAttribute("aria-hidden");
 }
 
-function focusNewspaper() {
-  if (!cameraRig || !cameraRig.object3D) return;
-  cameraRig.object3D.position.set(0, 1.6, 2.8);
-  cameraRig.object3D.rotation.set(0, 0, 0);
-  if (mainCamera && mainCamera.object3D) {
-    mainCamera.object3D.rotation.set(0, 0, 0);
+function reloadNewspaper() {
+  if (!newspaperFrame) return;
+  if (newspaperFrame.contentWindow) {
+    newspaperFrame.contentWindow.location.reload();
+    return;
   }
+
+  const source = newspaperFrame.getAttribute("src");
+  newspaperFrame.setAttribute("src", source);
 }
 
-function renderFeature(key) {
-  const feature = newspaperFeatures[key];
-  if (!feature) return;
+function teleportToPoint(point) {
+  if (isNewspaperOpen() || !point || !cameraRig || !AFRAME.THREE) return;
 
-  featureKicker.textContent = feature.kicker;
-  featureTitle.textContent = feature.title;
-  featureDeck.textContent = feature.deck;
-  featureCopy.innerHTML = feature.copy.map((paragraph) => `<p>${paragraph}</p>`).join("");
-  newspaperPages.dataset.mode = "feature";
+  const current = cameraRig.object3D.position;
+  const moveVector = new AFRAME.THREE.Vector3(point.x - current.x, 0, point.z - current.z);
+
+  if (moveVector.lengthSq() < 0.01) return;
+
+  const offset = TELEPORT_OFFSETS[point.surface] || TELEPORT_OFFSETS.floor;
+  const distance = Math.max(0, Math.min(moveVector.length() - offset, MAX_TELEPORT_STEP));
+
+  if (distance <= 0.05) return;
+
+  moveVector.normalize().multiplyScalar(distance);
+
+  const nextX = Math.max(-5.6, Math.min(5.6, current.x + moveVector.x));
+  const nextZ = Math.max(-5.9, Math.min(5.9, current.z + moveVector.z));
+
+  animateCameraTo(nextX, nextZ);
+}
+
+function handleAction(action) {
+  if (action === "close-panel") closeArtifact();
+  if (action === "toggle-help") helpPanel.hidden = !helpPanel.hidden;
+  if (action === "close-help") helpPanel.hidden = true;
+  if (action === "close-newspaper") closeNewspaper();
+  if (action === "reload-newspaper") reloadNewspaper();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderFeature("editor-note");
-
   document.querySelectorAll(".clickable").forEach((node) => {
     node.addEventListener("click", () => {
       const key = node.dataset.artifact;
+      if (!key) return;
+
       if (key === "newspaper") {
-        openNewspaper("frontpage");
+        openNewspaper();
         return;
       }
+
       renderArtifact(key);
+    });
+  });
+
+  document.querySelectorAll(".teleportable").forEach((node) => {
+    node.addEventListener("click", (event) => {
+      const intersection = event.detail && event.detail.intersection;
+      const point = intersection && intersection.point;
+      if (!point) return;
+
+      teleportToPoint({
+        x: point.x,
+        z: point.z,
+        surface: node.dataset.surface || "floor"
+      });
     });
   });
 
   document.querySelectorAll("[data-action]").forEach((button) => {
     button.addEventListener("click", () => {
-      const action = button.dataset.action;
-
-      if (action === "close-panel") closeArtifact();
-      if (action === "toggle-help") helpPanel.hidden = !helpPanel.hidden;
-      if (action === "close-help") helpPanel.hidden = true;
-      if (action === "open-frontpage") newspaperPages.dataset.mode = "frontpage";
-      if (action === "open-feature") renderFeature("editor-note");
-      if (action === "close-newspaper") closeNewspaper();
-      if (action === "focus-newspaper") focusNewspaper();
+      handleAction(button.dataset.action);
     });
   });
 
-  document.querySelectorAll("[data-feature]").forEach((button) => {
-    button.addEventListener("click", () => {
-      renderFeature(button.dataset.feature);
+  if (journeySelect) {
+    journeySelect.addEventListener("change", () => {
+      const key = journeySelect.value;
+      if (!key) return;
+      focusArtifact(key);
+      if (key !== "newspaper") renderArtifact(key);
     });
-  });
+  }
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       closeArtifact();
       helpPanel.hidden = true;
       closeNewspaper();
+      return;
     }
   });
 });
