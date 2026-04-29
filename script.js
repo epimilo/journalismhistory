@@ -828,6 +828,9 @@ document.addEventListener("DOMContentLoaded", () => {
   updateOrientationUI();
   updateStatusHint();
   applyPerformanceProfile();
+  if (isMobileDevice && topBar) {
+    topBar.classList.add("is-collapsed");
+  }
   updateTopBarToggle();
 
   // Canvas textures — run as soon as DOM is ready
