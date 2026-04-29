@@ -127,6 +127,7 @@ const hudStatusText   = document.querySelector(".hud__status span:last-child");
 const topBar          = document.querySelector(".top-bar");
 const topBarToggle    = document.getElementById("topBarToggle");
 const topBarToggleMark= document.getElementById("topBarToggleMark");
+let hasEnteredRoom = false;
 
 /* ── State ── */
 const audioState = { context: null, enabled: true, started: false };
@@ -653,7 +654,26 @@ function updateOrientationUI() {
   const isPortrait = window.matchMedia("(orientation: portrait)").matches;
   document.body.classList.toggle("is-portrait", isPortrait);
   document.body.classList.toggle("is-landscape", !isPortrait);
+  if (hasEnteredRoom) {
+    if (rotatePrompt) rotatePrompt.hidden = true;
+    if (introSplash && introSplash.style.display !== "none") {
+      introSplash.style.visibility = "visible";
+      introSplash.style.pointerEvents = "";
+    }
+    return;
+  }
+
   if (rotatePrompt) rotatePrompt.hidden = !isPortrait;
+  if (!introSplash || introSplash.style.display === "none") return;
+
+  if (isPortrait) {
+    // Before entering room on mobile: show only rotate prompt.
+    introSplash.style.visibility = "hidden";
+    introSplash.style.pointerEvents = "none";
+  } else {
+    introSplash.style.visibility = "visible";
+    introSplash.style.pointerEvents = "";
+  }
 }
 
 function updateStatusHint() {
@@ -675,11 +695,15 @@ function needsIOSGyroPermission() {
 
 function showGyroPrompt() {
   if (!gyroPrompt || !isMobileDevice || !hasDeviceOrientationAPI || !needsIOSGyroPermission()) return;
+  gyroPrompt.style.display = "";
   gyroPrompt.hidden = false;
 }
 
 async function requestGyroPermission() {
-  if (gyroPrompt) gyroPrompt.hidden = true;
+  if (gyroPrompt) {
+    gyroPrompt.hidden = true;
+    gyroPrompt.style.display = "none";
+  }
   if (!needsIOSGyroPermission()) return;
   try {
     const result = await window.DeviceOrientationEvent.requestPermission();
@@ -716,6 +740,17 @@ async function toggleFullscreen() {
     (document.exitFullscreen || document.webkitExitFullscreen).call(document);
   } else if (!fsEl) {
     (appShell.requestFullscreen || appShell.webkitRequestFullscreen).call(appShell);
+  }
+}
+
+async function enterFullscreenOnMobile() {
+  if (!isMobileDevice || !appShell) return;
+  const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+  if (fsEl) return;
+  try {
+    await (appShell.requestFullscreen || appShell.webkitRequestFullscreen).call(appShell);
+  } catch (error) {
+    // Some mobile browsers block fullscreen; continue without interrupting UX.
   }
 }
 
@@ -842,7 +877,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Intro splash dismiss
   if (introEnterBtn) {
     introEnterBtn.addEventListener("click", async () => {
+      hasEnteredRoom = true;
+      if (rotatePrompt) rotatePrompt.hidden = true;
       if (isMobileDevice) showGyroPrompt();
+      if (isMobileDevice) await enterFullscreenOnMobile();
       dismissSplash();
       if (isMobileDevice && !needsIOSGyroPermission()) setGyroEnabled(true);
     });
