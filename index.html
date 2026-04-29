@@ -49,6 +49,10 @@
       <p class="gyro-prompt__text">Cho phép truy cập chuyển động để xoay nhìn bằng điện thoại.</p>
       <button type="button" class="button button--small" id="gyroEnableBtn">Bật cảm biến</button>
     </div>
+    <div class="rotate-prompt glass" id="rotatePrompt" hidden>
+      <p class="rotate-prompt__title">Nên xoay ngang màn hình</p>
+      <p class="rotate-prompt__text">Để có trải nghiệm tốt nhất, hãy xoay điện thoại sang màn hình ngang.</p>
+    </div>
 
     <main class="app-shell" id="appShell">
       <section class="hud">
@@ -83,21 +87,28 @@
       </div>
 
       <section class="top-bar glass" aria-label="Hành trình phòng trưng bày">
-        <label class="top-bar__field" for="journeySelect">
-          <span class="eyebrow">Hành trình</span>
-          <select id="journeySelect" class="top-bar__select">
-            <option value="">Chọn một điểm dừng</option>
-            <option value="timeline">Mở đầu</option>
-            <option value="voice">Giọng nói</option>
-            <option value="typewriter">Bản thảo</option>
-            <option value="archive">Lưu trữ</option>
-            <option value="painting-dawn">Tranh số 1</option>
-            <option value="painting-night">Tranh số 2</option>
-            <option value="newspaper">Tờ báo cuối cùng</option>
-          </select>
-        </label>
-        <div class="top-bar__actions">
-          <button type="button" class="button button--small" data-action="toggle-audio" id="audioButton">Tắt nhạc</button>
+        <div class="top-bar__header">
+          <p class="eyebrow">Hành trình</p>
+          <button type="button" class="top-bar__toggle" data-action="toggle-topbar" id="topBarToggle" aria-label="Thu gọn hành trình">
+            <span id="topBarToggleMark">−</span>
+          </button>
+        </div>
+        <div class="top-bar__content" id="topBarContent">
+          <label class="top-bar__field" for="journeySelect">
+            <select id="journeySelect" class="top-bar__select">
+              <option value="">Chọn một điểm dừng</option>
+              <option value="timeline">Mở đầu</option>
+              <option value="voice">Giọng nói</option>
+              <option value="typewriter">Bản thảo</option>
+              <option value="archive">Lưu trữ</option>
+              <option value="painting-dawn">Tranh số 1</option>
+              <option value="painting-night">Tranh số 2</option>
+              <option value="newspaper">Tờ báo cuối cùng</option>
+            </select>
+          </label>
+          <div class="top-bar__actions">
+            <button type="button" class="button button--small" data-action="toggle-audio" id="audioButton">Tắt nhạc</button>
+          </div>
         </div>
       </section>
 

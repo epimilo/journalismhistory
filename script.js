@@ -122,7 +122,11 @@ const progressCount   = document.getElementById("progressCount");
 const progressFill    = document.getElementById("progressFill");
 const gyroPrompt      = document.getElementById("gyroPrompt");
 const gyroEnableBtn   = document.getElementById("gyroEnableBtn");
+const rotatePrompt    = document.getElementById("rotatePrompt");
 const hudStatusText   = document.querySelector(".hud__status span:last-child");
+const topBar          = document.querySelector(".top-bar");
+const topBarToggle    = document.getElementById("topBarToggle");
+const topBarToggleMark= document.getElementById("topBarToggleMark");
 
 /* ── State ── */
 const audioState = { context: null, enabled: true, started: false };
@@ -640,6 +644,18 @@ function configureInputMode() {
   }
 }
 
+function updateOrientationUI() {
+  if (!isMobileDevice) {
+    document.body.classList.remove("is-portrait", "is-landscape");
+    if (rotatePrompt) rotatePrompt.hidden = true;
+    return;
+  }
+  const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+  document.body.classList.toggle("is-portrait", isPortrait);
+  document.body.classList.toggle("is-landscape", !isPortrait);
+  if (rotatePrompt) rotatePrompt.hidden = !isPortrait;
+}
+
 function updateStatusHint() {
   if (!hudStatusText) return;
   hudStatusText.textContent = isMobileDevice
@@ -658,11 +674,12 @@ function needsIOSGyroPermission() {
 }
 
 function showGyroPrompt() {
-  if (!gyroPrompt || !isMobileDevice || !needsIOSGyroPermission()) return;
+  if (!gyroPrompt || !isMobileDevice || !hasDeviceOrientationAPI || !needsIOSGyroPermission()) return;
   gyroPrompt.hidden = false;
 }
 
 async function requestGyroPermission() {
+  if (gyroPrompt) gyroPrompt.hidden = true;
   if (!needsIOSGyroPermission()) return;
   try {
     const result = await window.DeviceOrientationEvent.requestPermission();
@@ -675,6 +692,13 @@ async function requestGyroPermission() {
     // Keep controls available via touch drag even if gyro is denied.
   }
   setGyroEnabled(false);
+}
+
+function updateTopBarToggle() {
+  if (!topBar || !topBarToggle || !topBarToggleMark) return;
+  const collapsed = topBar.classList.contains("is-collapsed");
+  topBarToggleMark.textContent = collapsed ? "+" : "−";
+  topBarToggle.setAttribute("aria-label", collapsed ? "Mở hành trình" : "Thu gọn hành trình");
 }
 
 /* ════════════════════════════════════════
@@ -772,6 +796,10 @@ function handleAction(action) {
   if (action === "close-newspaper")  closeNewspaper();
   if (action === "reload-newspaper") reloadNewspaper();
   if (action === "toggle-audio")     toggleAudio();
+  if (action === "toggle-topbar" && topBar) {
+    topBar.classList.toggle("is-collapsed");
+    updateTopBarToggle();
+  }
   if (action === "toggle-intro" && introShell) {
     introShell.classList.toggle("is-collapsed");
     updateIntroToggle();
@@ -797,8 +825,10 @@ function bindSceneFullscreenButton() {
 ════════════════════════════════════════ */
 document.addEventListener("DOMContentLoaded", () => {
   configureInputMode();
+  updateOrientationUI();
   updateStatusHint();
   applyPerformanceProfile();
+  updateTopBarToggle();
 
   // Canvas textures — run as soon as DOM is ready
   initCanvasTextures();
@@ -895,4 +925,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (gyroEnableBtn) {
     gyroEnableBtn.addEventListener("click", requestGyroPermission);
   }
+  window.addEventListener("resize", updateOrientationUI, { passive: true });
+  window.addEventListener("orientationchange", updateOrientationUI, { passive: true });
 });

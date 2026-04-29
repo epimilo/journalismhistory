@@ -273,6 +273,34 @@ button, input, textarea, select { font: inherit; }
   line-height: 1.55;
 }
 
+.rotate-prompt {
+  position: fixed;
+  z-index: 31;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(420px, calc(100vw - 28px));
+  padding: 16px;
+  border-radius: 12px;
+  display: grid;
+  gap: 8px;
+  text-align: center;
+}
+
+.rotate-prompt__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-soft);
+}
+
+.rotate-prompt__text {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
 /* ─────────────────────────────────────────
    PROGRESS COUNTER
 ───────────────────────────────────────── */
@@ -456,6 +484,33 @@ button, input, textarea, select { font: inherit; }
 }
 
 .top-bar__field { display: grid; gap: 8px; }
+
+.top-bar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.top-bar__toggle {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.08);
+  color: var(--text);
+  cursor: pointer;
+  line-height: 1;
+  font-size: 1rem;
+}
+
+.top-bar__content {
+  margin-top: 10px;
+}
+
+.top-bar.is-collapsed .top-bar__content {
+  display: none;
+}
 
 .top-bar__actions {
   display: flex;
@@ -802,6 +857,29 @@ body.is-mobile .icon-button {
 body.is-mobile .intro-shell,
 body.is-mobile .hud__intro {
   width: calc(100vw - 24px);
+}
+
+body.is-mobile.is-portrait .rotate-prompt:not([hidden]) {
+  display: grid;
+}
+
+body.is-mobile.is-landscape .rotate-prompt,
+body:not(.is-mobile) .rotate-prompt,
+body:not(.is-mobile) .gyro-prompt {
+  display: none !important;
+}
+
+body.is-mobile.is-landscape .top-bar {
+  width: min(360px, calc(100vw - 24px));
+  padding: 10px 12px;
+}
+
+body.is-mobile.is-landscape .hud {
+  padding: 10px;
+}
+
+body.is-mobile.is-landscape .hud__status {
+  max-width: min(620px, calc(100vw - 20px));
 }
 
 @media (hover: none) and (pointer: coarse) {
