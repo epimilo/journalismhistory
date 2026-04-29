@@ -44,6 +44,12 @@
       <div class="cursor-ring__inner"></div>
     </div>
 
+    <div class="gyro-prompt glass" id="gyroPrompt" hidden>
+      <p class="gyro-prompt__title">Bật xoay bằng cảm biến</p>
+      <p class="gyro-prompt__text">Cho phép truy cập chuyển động để xoay nhìn bằng điện thoại.</p>
+      <button type="button" class="button button--small" id="gyroEnableBtn">Bật cảm biến</button>
+    </div>
+
     <main class="app-shell" id="appShell">
       <section class="hud">
         <div class="intro-shell" id="introShell">
@@ -147,7 +153,7 @@
 
       <!-- A-FRAME SCENE -->
       <section class="scene-wrap" id="sceneWrap">
-        <a-scene renderer="antialias: true; colorManagement: true" background="color: #111111" vr-mode-ui="enabled: true" embedded>
+        <a-scene renderer="antialias: true; colorManagement: true" background="color: #111111" vr-mode-ui="enabled: true" device-orientation-permission-ui="enabled: false" embedded>
           <a-assets>
             <img id="paperTexture" alt="" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23f3ead9'/%3E%3Cg fill='none' stroke='%23d3c3a5' stroke-width='1' opacity='.45'%3E%3Cpath d='M0 64h512M0 128h512M0 192h512M0 256h512M0 320h512M0 384h512M0 448h512'/%3E%3Cpath d='M64 0v512M128 0v512M192 0v512M256 0v512M320 0v512M384 0v512M448 0v512'/%3E%3C/g%3E%3C/svg%3E" />
             <canvas id="timelineCanvas" width="512" height="682"></canvas>
@@ -212,8 +218,8 @@
 
           <!-- Camera rig -->
           <a-entity id="cameraRig" position="0 1.6 2.8">
-            <a-camera id="mainCamera" look-controls wasd-controls="enabled: false">
-              <a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: .clickable, .teleportable"></a-entity>
+            <a-camera id="mainCamera" look-controls="touchEnabled: true; mouseEnabled: true; magicWindowTrackingEnabled: true" wasd-controls="enabled: false">
+              <a-entity id="mainCursor" cursor="rayOrigin: mouse" raycaster="objects: .clickable, .teleportable"></a-entity>
             </a-camera>
           </a-entity>
         </a-scene>

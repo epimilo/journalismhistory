@@ -246,6 +246,33 @@ button, input, textarea, select { font: inherit; }
   transform: translateY(0);
 }
 
+.gyro-prompt {
+  position: fixed;
+  z-index: 30;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  width: min(420px, calc(100vw - 32px));
+  padding: 14px 16px;
+  border-radius: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.gyro-prompt__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-soft);
+}
+
+.gyro-prompt__text {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
 /* ─────────────────────────────────────────
    PROGRESS COUNTER
 ───────────────────────────────────────── */
@@ -738,4 +765,49 @@ button, input, textarea, select { font: inherit; }
   .progress-counter { bottom: 16px; left: 16px; }
 
   .newspaper__frame { min-height: calc(100vh - 172px); }
+}
+
+body.is-mobile .cursor-ring,
+body.is-mobile .artifact-tooltip {
+  display: none !important;
+}
+
+body.is-mobile .hud {
+  padding: 14px;
+}
+
+body.is-mobile .hud__status {
+  font-size: 0.8rem;
+  padding: 10px 12px;
+}
+
+body.is-mobile .top-bar {
+  top: 12px;
+  right: 12px;
+  width: calc(100vw - 24px);
+  padding: 12px;
+}
+
+body.is-mobile .progress-counter {
+  left: 12px;
+  bottom: 12px;
+}
+
+body.is-mobile .button,
+body.is-mobile .top-bar__select,
+body.is-mobile .icon-button {
+  min-height: 46px;
+}
+
+body.is-mobile .intro-shell,
+body.is-mobile .hud__intro {
+  width: calc(100vw - 24px);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .button:hover,
+  .intro-splash__enter:hover {
+    transform: none;
+    box-shadow: none;
+  }
 }

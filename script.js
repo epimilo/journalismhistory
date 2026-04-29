@@ -86,10 +86,14 @@ const focusPoints = {
   newspaper:       { x:  0,    z: -2.95 }
 };
 
-const TELEPORT_OFFSETS = { floor: 1.35, wall: 2.9, pedestal: 2.15 };
-const MAX_TELEPORT_STEP = 2.1;
+const TELEPORT_OFFSETS = { floor: 1.2, wall: 2.55, pedestal: 1.95 };
+const MAX_TELEPORT_STEP = 2.75;
 const ROOM_LIMITS = { x: 7.5, z: 7.5 };
 const TOTAL_ARTIFACTS = 7;
+const MOBILE_MAX_PIXEL_RATIO = 1.25;
+const isTouchDevice = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+const isMobileDevice = /Android|iPhone|iPad|iPod|Mobile|Windows Phone|BlackBerry|Opera Mini/i.test(navigator.userAgent) || isTouchDevice;
+const hasDeviceOrientationAPI = typeof window.DeviceOrientationEvent !== "undefined";
 
 /* ── DOM refs ── */
 const artifactPanel   = document.getElementById("artifactPanel");
@@ -107,6 +111,7 @@ const newspaperView   = document.getElementById("newspaperView");
 const newspaperFrame  = document.getElementById("newspaperFrame");
 const sceneWrap       = document.getElementById("sceneWrap");
 const cameraRig       = document.getElementById("cameraRig");
+const mainCursor      = document.getElementById("mainCursor");
 const audioButton     = document.getElementById("audioButton");
 const sceneEl         = document.querySelector("a-scene");
 const introSplash     = document.getElementById("introSplash");
@@ -115,6 +120,9 @@ const cursorRing      = document.getElementById("cursorRing");
 const artifactTooltip = document.getElementById("artifactTooltip");
 const progressCount   = document.getElementById("progressCount");
 const progressFill    = document.getElementById("progressFill");
+const gyroPrompt      = document.getElementById("gyroPrompt");
+const gyroEnableBtn   = document.getElementById("gyroEnableBtn");
+const hudStatusText   = document.querySelector(".hud__status span:last-child");
 
 /* ── State ── */
 const audioState = { context: null, enabled: true, started: false };
@@ -135,7 +143,8 @@ function drawTimelineCanvas() {
   ctx.fillRect(0, 0, W, H);
 
   // Subtle aged paper grain
-  for (let i = 0; i < 2000; i++) {
+  const grainSteps = isMobileDevice ? 650 : 2000;
+  for (let i = 0; i < grainSteps; i++) {
     ctx.fillStyle = `rgba(100,70,30,${Math.random() * 0.04})`;
     ctx.fillRect(Math.random() * W, Math.random() * H, 1, 1);
   }
@@ -445,6 +454,7 @@ function tickCursor() {
 }
 
 function initCursorRing() {
+  if (isMobileDevice) return;
   // Start the RAF loop immediately so it's always in sync with display refresh
   cursorRafId = requestAnimationFrame(tickCursor);
 
@@ -467,17 +477,20 @@ function initCursorRing() {
    TOOLTIP + HOVER GLOW
 ════════════════════════════════════════ */
 function showTooltip(label) {
+  if (isMobileDevice) return;
   artifactTooltip.textContent = label;
   artifactTooltip.classList.add("is-visible");
   cursorRing.classList.add("is-hovering");
 }
 
 function hideTooltip() {
+  if (isMobileDevice) return;
   artifactTooltip.classList.remove("is-visible");
   cursorRing.classList.remove("is-hovering");
 }
 
 function applyHoverGlow(el, on) {
+  if (isMobileDevice) return;
   if (on) {
     el.setAttribute("animation__hover", "property: material.emissive; to: #8b5c20; dur: 200; easing: easeOutQuad");
   } else {
@@ -578,6 +591,90 @@ function teleportToPoint(point) {
   const nextX = Math.max(-ROOM_LIMITS.x, Math.min(ROOM_LIMITS.x, current.x + moveVector.x));
   const nextZ = Math.max(-ROOM_LIMITS.z, Math.min(ROOM_LIMITS.z, current.z + moveVector.z));
   animateCameraTo(nextX, nextZ);
+}
+
+function getTeleportIntersection(el, evt) {
+  if (!el) return null;
+
+  const directIntersection = evt && evt.detail && evt.detail.intersection;
+  if (directIntersection && directIntersection.point) {
+    return {
+      x: directIntersection.point.x,
+      z: directIntersection.point.z,
+      surface: el.dataset.surface || "floor"
+    };
+  }
+
+  if (!mainCursor || !mainCursor.components || !mainCursor.components.raycaster) return null;
+
+  const fallbackIntersection = mainCursor.components.raycaster.getIntersection(el);
+  if (!fallbackIntersection || !fallbackIntersection.point) return null;
+
+  return {
+    x: fallbackIntersection.point.x,
+    z: fallbackIntersection.point.z,
+    surface: el.dataset.surface || "floor"
+  };
+}
+
+function applyPerformanceProfile() {
+  if (!sceneEl || !isMobileDevice) return;
+  sceneEl.setAttribute("renderer", "antialias: false; colorManagement: true; precision: mediump; powerPreference: high-performance");
+  sceneEl.addEventListener("render-target-loaded", () => {
+    if (!sceneEl.renderer) return;
+    sceneEl.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MOBILE_MAX_PIXEL_RATIO));
+  }, { once: true });
+}
+
+function configureInputMode() {
+  document.body.classList.toggle("is-mobile", isMobileDevice);
+  if (!mainCursor) return;
+
+  if (isMobileDevice) {
+    // Center ray works reliably with touch on mobile A-Frame.
+    mainCursor.setAttribute("cursor", "rayOrigin: entity; fuse: false");
+    if (cursorRing) cursorRing.style.display = "none";
+    if (artifactTooltip) artifactTooltip.style.display = "none";
+  } else {
+    mainCursor.setAttribute("cursor", "rayOrigin: mouse");
+  }
+}
+
+function updateStatusHint() {
+  if (!hudStatusText) return;
+  hudStatusText.textContent = isMobileDevice
+    ? "Mobile: vuốt để xoay nhìn, chạm vào vật phẩm hoặc bề mặt để di chuyển. Có thể bật cảm biến xoay sau khi vào phòng."
+    : "Desktop: rê chuột để nhìn quanh, bấm vào bề mặt trong phòng để di đến gần điểm đó. Nhạc nền bật sau lần chạm đầu tiên.";
+}
+
+function setGyroEnabled(enabled) {
+  const mainCamera = document.getElementById("mainCamera");
+  if (!mainCamera) return;
+  mainCamera.setAttribute("look-controls", `touchEnabled: true; mouseEnabled: true; magicWindowTrackingEnabled: ${enabled ? "true" : "false"}`);
+}
+
+function needsIOSGyroPermission() {
+  return hasDeviceOrientationAPI && typeof window.DeviceOrientationEvent.requestPermission === "function";
+}
+
+function showGyroPrompt() {
+  if (!gyroPrompt || !isMobileDevice || !needsIOSGyroPermission()) return;
+  gyroPrompt.hidden = false;
+}
+
+async function requestGyroPermission() {
+  if (!needsIOSGyroPermission()) return;
+  try {
+    const result = await window.DeviceOrientationEvent.requestPermission();
+    if (result === "granted") {
+      setGyroEnabled(true);
+      if (gyroPrompt) gyroPrompt.hidden = true;
+      return;
+    }
+  } catch (error) {
+    // Keep controls available via touch drag even if gyro is denied.
+  }
+  setGyroEnabled(false);
 }
 
 /* ════════════════════════════════════════
@@ -699,6 +796,10 @@ function bindSceneFullscreenButton() {
    INIT
 ════════════════════════════════════════ */
 document.addEventListener("DOMContentLoaded", () => {
+  configureInputMode();
+  updateStatusHint();
+  applyPerformanceProfile();
+
   // Canvas textures — run as soon as DOM is ready
   initCanvasTextures();
 
@@ -707,7 +808,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Intro splash dismiss
   if (introEnterBtn) {
-    introEnterBtn.addEventListener("click", dismissSplash);
+    introEnterBtn.addEventListener("click", async () => {
+      if (isMobileDevice) showGyroPrompt();
+      dismissSplash();
+      if (isMobileDevice && !needsIOSGyroPermission()) setGyroEnabled(true);
+    });
   }
 
   // Fullscreen listeners
@@ -730,15 +835,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const key   = node.dataset.artifact;
     const label = node.dataset.label || key;
 
-    node.addEventListener("mouseenter", () => {
-      if (label) showTooltip(label);
-      applyHoverGlow(node, true);
-    });
+    if (!isMobileDevice) {
+      node.addEventListener("mouseenter", () => {
+        if (label) showTooltip(label);
+        applyHoverGlow(node, true);
+      });
 
-    node.addEventListener("mouseleave", () => {
-      hideTooltip();
-      applyHoverGlow(node, false);
-    });
+      node.addEventListener("mouseleave", () => {
+        hideTooltip();
+        applyHoverGlow(node, false);
+      });
+    }
 
     node.addEventListener("click", () => {
       if (!key) return;
@@ -747,13 +854,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Teleportable surfaces
+  // Teleportable surfaces use their own click events, with the shared mouse raycaster as fallback.
   document.querySelectorAll(".teleportable").forEach(node => {
     node.addEventListener("click", (event) => {
-      const intersection = event.detail && event.detail.intersection;
-      const point = intersection && intersection.point;
-      if (!point) return;
-      teleportToPoint({ x: point.x, z: point.z, surface: node.dataset.surface || "floor" });
+      const targetPoint = getTeleportIntersection(node, event);
+      if (targetPoint) teleportToPoint(targetPoint);
     });
   });
 
@@ -786,4 +891,8 @@ document.addEventListener("DOMContentLoaded", () => {
       dismissSplash();
     }
   });
+
+  if (gyroEnableBtn) {
+    gyroEnableBtn.addEventListener("click", requestGyroPermission);
+  }
 });
