@@ -42,6 +42,13 @@ button, input, textarea, select { font: inherit; }
   overflow: hidden;
 }
 
+/* Mobile portrait pre-entry lock: show rotate prompt only */
+body.is-mobile.is-rotate-lock .app-shell,
+body.is-mobile.is-rotate-lock .gyro-prompt,
+body.is-mobile.is-rotate-lock .intro-splash {
+  display: none !important;
+}
+
 .intro-splash__bg {
   position: absolute;
   inset: 0;
@@ -366,7 +373,7 @@ button, input, textarea, select { font: inherit; }
   position: fixed;
   inset: 0;
   width: 100%;
-  height: 100%;
+  height: 100dvh;
 }
 
 /* ─────────────────────────────────────────
@@ -880,6 +887,41 @@ body.is-mobile.is-landscape .hud {
 
 body.is-mobile.is-landscape .hud__status {
   max-width: min(620px, calc(100vw - 20px));
+}
+
+body.is-mobile {
+  min-height: 100dvh;
+}
+
+body.is-mobile .app-shell {
+  min-height: 100dvh;
+}
+
+@media (max-height: 560px) {
+  .intro-splash {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 20px 0;
+  }
+
+  .intro-splash__content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .intro-splash__title {
+    margin-bottom: 18px;
+    font-size: clamp(3rem, 10vw, 5.2rem);
+  }
+
+  .intro-splash__lede {
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .intro-splash__scroll-hint {
+    display: none;
+  }
 }
 
 @media (hover: none) and (pointer: coarse) {

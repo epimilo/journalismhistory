@@ -648,6 +648,7 @@ function configureInputMode() {
 function updateOrientationUI() {
   if (!isMobileDevice) {
     document.body.classList.remove("is-portrait", "is-landscape");
+    document.body.classList.remove("is-rotate-lock");
     if (rotatePrompt) rotatePrompt.hidden = true;
     return;
   }
@@ -655,6 +656,7 @@ function updateOrientationUI() {
   document.body.classList.toggle("is-portrait", isPortrait);
   document.body.classList.toggle("is-landscape", !isPortrait);
   if (hasEnteredRoom) {
+    document.body.classList.remove("is-rotate-lock");
     if (rotatePrompt) rotatePrompt.hidden = true;
     if (introSplash && introSplash.style.display !== "none") {
       introSplash.style.visibility = "visible";
@@ -663,6 +665,7 @@ function updateOrientationUI() {
     return;
   }
 
+  document.body.classList.toggle("is-rotate-lock", isPortrait);
   if (rotatePrompt) rotatePrompt.hidden = !isPortrait;
   if (!introSplash || introSplash.style.display === "none") return;
 
@@ -752,6 +755,8 @@ async function enterFullscreenOnMobile() {
   } catch (error) {
     // Some mobile browsers block fullscreen; continue without interrupting UX.
   }
+  // Helps Safari collapse browser chrome after entering.
+  window.scrollTo(0, 1);
 }
 
 /* ════════════════════════════════════════
@@ -878,6 +883,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (introEnterBtn) {
     introEnterBtn.addEventListener("click", async () => {
       hasEnteredRoom = true;
+      document.body.classList.remove("is-rotate-lock");
       if (rotatePrompt) rotatePrompt.hidden = true;
       if (isMobileDevice) showGyroPrompt();
       if (isMobileDevice) await enterFullscreenOnMobile();
